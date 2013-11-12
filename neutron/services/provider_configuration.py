@@ -125,7 +125,8 @@ class ProviderConfiguration(object):
     def add_provider(self, provider):
         self._ensure_driver_unique(provider['driver'])
         self._ensure_default_unique(provider['service_type'],
-                                    provider['default'])
+                                    provider['default'],
+                                    provider['driver'])
         provider_type = (provider['service_type'], provider['name'])
         if provider_type in self.providers:
             msg = (_("Multiple providers specified for service "
