@@ -103,20 +103,19 @@ class ProviderConfiguration(object):
     def _ensure_driver_unique(self, driver):
         for k, v in self.providers.items():
             if v['driver'] == driver:
-                msg = (_("Driver %s is not unique across providers") %
+                msg = (_("Driver %s is not unique across providers."
+                         "Ignoring duplicates") %
                        driver)
-                LOG.exception(msg)
-                raise n_exc.Invalid(msg)
+                LOG.warn(msg)
 
     def _ensure_default_unique(self, type, default):
         if not default:
             return
         for k, v in self.providers.items():
             if k[0] == type and v['default']:
-                msg = _("Multiple default providers "
-                        "for service %s") % type
-                LOG.exception(msg)
-                raise n_exc.Invalid(msg)
+                msg = _("Multiple default providers found "
+                        "for service %s. Ignoring duplicates") % type
+                LOG.warn(msg)
 
     def add_provider(self, provider):
         self._ensure_driver_unique(provider['driver'])
@@ -125,9 +124,8 @@ class ProviderConfiguration(object):
         provider_type = (provider['service_type'], provider['name'])
         if provider_type in self.providers:
             msg = (_("Multiple providers specified for service "
-                     "%s") % provider['service_type'])
-            LOG.exception(msg)
-            raise n_exc.Invalid(msg)
+                     "%s. Ignoring duplicates") % provider['service_type'])
+            LOG.warn(msg)
         self.providers[provider_type] = {'driver': provider['driver'],
                                          'default': provider['default']}
 
