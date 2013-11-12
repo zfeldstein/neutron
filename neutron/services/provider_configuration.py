@@ -106,6 +106,7 @@ class ProviderConfiguration(object):
                 msg = (_("Driver %s is not unique across providers."
                          "Ignoring duplicates.") %
                        driver)
+                self.providers.pop(k,None)
                 LOG.warn(msg)
 
     def _ensure_default_unique(self, type, default, driver):
@@ -116,6 +117,7 @@ class ProviderConfiguration(object):
                 msg = _("Multiple default providers found "
                         "for service %s. Ignoring duplicates.") % type
                 LOG.warn(msg)
+                self.providers.pop(k,None)
             else:
                 msg = _("Multiple default providers "
                         "for service %s") % type
