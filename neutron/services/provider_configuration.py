@@ -118,7 +118,7 @@ class ProviderConfiguration(object):
                         "for service %s. Ignoring duplicates.") % type
                 LOG.warn(msg)
                 self.providers.pop(k,None)
-            else:
+            elif k[0] == type and v['default']:
                 msg = _("Multiple default providers "
                         "for service %s") % type
                 LOG.exception(msg)
