@@ -128,7 +128,7 @@ class ProviderConfigurationTestCase(base.BaseTestCase):
                                                 'default': True}
         self.assertRaises(q_exc.Invalid,
                           pconf._ensure_default_unique,
-                          'svctype', True)
+                          'svctype', True, 'driver_path')
         self.assertIsNone(pconf._ensure_default_unique('svctype', False, 'driver_path'))
         self.assertIsNone(pconf._ensure_default_unique('svctype1', True, 'driver_path'))
         self.assertIsNone(pconf._ensure_default_unique('svctype1', False, 'driver_path'))
