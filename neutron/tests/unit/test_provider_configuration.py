@@ -119,8 +119,8 @@ class ProviderConfigurationTestCase(base.BaseTestCase):
         pconf.providers[('svctype', 'name')] = {'driver': 'driver',
                                                 'default': True}
         self.assertRaises(q_exc.Invalid,
-                          pconf._ensure_driver_unique, 'driver')
-        self.assertIsNone(pconf._ensure_driver_unique('another_driver1'))
+                          pconf._ensure_driver_unique, 'driver', 'driver_path')
+        self.assertIsNone(pconf._ensure_driver_unique('another_driver1', 'driver_path'))
 
     def test_ensure_default_unique(self):
         pconf = provconf.ProviderConfiguration([])
@@ -129,9 +129,9 @@ class ProviderConfigurationTestCase(base.BaseTestCase):
         self.assertRaises(q_exc.Invalid,
                           pconf._ensure_default_unique,
                           'svctype', True)
-        self.assertIsNone(pconf._ensure_default_unique('svctype', False))
-        self.assertIsNone(pconf._ensure_default_unique('svctype1', True))
-        self.assertIsNone(pconf._ensure_default_unique('svctype1', False))
+        self.assertIsNone(pconf._ensure_default_unique('svctype', False, 'driver_path'))
+        self.assertIsNone(pconf._ensure_default_unique('svctype1', True, 'driver_path'))
+        self.assertIsNone(pconf._ensure_default_unique('svctype1', False, 'driver_path'))
 
     def test_add_provider(self):
         pconf = provconf.ProviderConfiguration([])
