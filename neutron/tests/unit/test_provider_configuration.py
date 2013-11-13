@@ -118,8 +118,6 @@ class ProviderConfigurationTestCase(base.BaseTestCase):
         pconf = provconf.ProviderConfiguration([])
         pconf.providers[('svctype', 'name')] = {'driver': 'driver',
                                                 'default': True}
-        self.assertRaises(q_exc.Invalid,
-                          pconf._ensure_driver_unique, 'driver')
         self.assertIsNone(pconf._ensure_driver_unique('another_driver1'))
 
     def test_ensure_default_unique(self):
